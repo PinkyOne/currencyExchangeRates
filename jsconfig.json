@@ -1,0 +1,16 @@
+{
+  "allowSyntheticDefaultImports": true,
+  "baseUrl": ".",
+  "paths": {
+    "*": [
+      "*",
+      "src/*"
+    ]
+  },
+  "exclude": [
+    "config-overrides.js"
+  ],
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
+}
