@@ -3,7 +3,7 @@ import {styled} from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 
 const CustomPaper = styled(Paper)({
-    width: 200,
+    width: 400,
     height: 500,
 });
 

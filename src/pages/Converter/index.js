@@ -11,18 +11,17 @@ type Props = {};
 class Converter extends Component<Props> {
     @observable string: string = '';
 
-    render(): React$Node {
-        const {string} = this;
-        return (<div>
-            <div>{string}</div>
-            <input onChange={this.onChange}/>
-            <Button variant="contained" color="primary">
-                Hello World
-            </Button>
-        </div>);
-    }
-
     onChange = ({target: {value}}: SyntheticInputEvent<EventTarget>) => this.string = value;
+
+    render(): React$Node {
+        return (
+            <div>
+                <input onChange={this.onChange}/>
+                <Button variant="contained" color="primary">
+                    Convert
+                </Button>
+            </div>);
+    }
 }
 
 export default Converter;

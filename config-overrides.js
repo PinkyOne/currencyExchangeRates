@@ -9,13 +9,16 @@ const {
 } = require("customize-cra");
 
 
-module.exports = override(
-    addDecoratorsLegacy(),
-    ...addBabelPlugins(
-        "babel-plugin-styled-components"
+module.exports = {
+    webpack: override(
+        addDecoratorsLegacy(),
+        disableEsLint(),
+        ...addBabelPlugins(
+            "babel-plugin-styled-components"
+        ),
+        fixBabelImports("react-app-rewire-mobx", {
+            libraryDirectory: "",
+            camel2DashComponentName: false
+        }),
     ),
-    fixBabelImports("react-app-rewire-mobx", {
-        libraryDirectory: "",
-        camel2DashComponentName: false
-    }),
-);
+};
