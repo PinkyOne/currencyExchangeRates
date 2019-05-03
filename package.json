@@ -28,6 +28,7 @@
     "@material-ui/core": "^3.9.3",
     "@material-ui/styles": "4.0.0-beta.0",
     "flow-bin": "^0.98.0",
+    "history": "^4.9.0",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
     "react": "^16.8.6",

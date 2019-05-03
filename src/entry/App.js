@@ -7,9 +7,7 @@ import {StyledApp} from "./styles";
 function App() {
     return (
         <StyledApp>
-            <Layout>
-                <AppRouter/>
-            </Layout>
+            <AppRouter/>
         </StyledApp>
     );
 }
