@@ -4,6 +4,7 @@ import React, {Component} from "react";
 import {observer} from "mobx-react";
 import {computed, observable} from "mobx";
 import {Link} from "react-router-dom";
+import { withRouter } from "react-router";
 
 import AppBar from "@material-ui/core/AppBar";
 import Tab from "@material-ui/core/Tab";
@@ -15,25 +16,19 @@ import {CONVERTER, CURRENCIES_LIST} from "routes";
 
 import {Content, CustomPaper} from "./styled";
 
+import type { Router } from "react-router-dom";
+
 function LinkTab(props) {
     return <Tab component={Link} {...props} />;
 }
 
-type TProps = {
-    history: {}
-};
-
+@withRouter
 @observer
-class Layout extends Component<TProps> {
+class Layout extends Component<Router> {
     @computed
     get tabValue(): number {
-        debugger
         return this.props.history.location.pathname === CURRENCIES_LIST ? 1 : 0
     }
-
-
-    handleChange = (event, value) => {
-    };
 
     render() {
         const {children} = this.props;
@@ -43,7 +38,7 @@ class Layout extends Component<TProps> {
                 <NoSsr>
                     <div>
                         <AppBar position="static">
-                            <Tabs variant="fullWidth" value={tabValue} onChange={this.handleChange}>
+                            <Tabs variant="fullWidth" value={tabValue} >
                                 <LinkTab label="Converter" to={CONVERTER}/>
                                 <LinkTab label="Currencies List" to={CURRENCIES_LIST}/>
                             </Tabs>

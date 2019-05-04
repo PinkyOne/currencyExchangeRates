@@ -14,7 +14,7 @@ const history = createBrowserHistory();
 
 const AppRouter = () => (
     <Router history={history}>
-        <Layout history={history}>
+        <Layout>
             <Route path={HOME} exact component={Converter}/>
             <Route path={CONVERTER} component={Converter}/>
             <Route path={CURRENCIES_LIST} component={CurrenciesList}/>
