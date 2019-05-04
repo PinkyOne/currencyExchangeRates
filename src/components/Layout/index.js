@@ -4,7 +4,7 @@ import React, {Component} from "react";
 import {observer} from "mobx-react";
 import {computed, observable} from "mobx";
 import {Link} from "react-router-dom";
-import { withRouter } from "react-router";
+import {withRouter} from "react-router";
 
 import AppBar from "@material-ui/core/AppBar";
 import Tab from "@material-ui/core/Tab";
@@ -16,7 +16,7 @@ import {CONVERTER, CURRENCIES_LIST} from "routes";
 
 import {Content, CustomPaper} from "./styled";
 
-import type { Router } from "react-router-dom";
+import type {Router} from "react-router-dom";
 
 function LinkTab(props) {
     return <Tab component={Link} {...props} />;
@@ -38,13 +38,18 @@ class Layout extends Component<Router> {
                 <NoSsr>
                     <div>
                         <AppBar position="static">
-                            <Tabs variant="fullWidth" value={tabValue} >
+                            <Tabs variant="fullWidth" value={tabValue}>
                                 <LinkTab label="Converter" to={CONVERTER}/>
                                 <LinkTab label="Currencies List" to={CURRENCIES_LIST}/>
                             </Tabs>
                         </AppBar>
                         <Content>
-                            <Typography variant="h6" gutterBottom>Welcome to the Awesome Currency Converter</Typography>
+                            <Typography
+                                variant="h6"
+                                gutterBottom
+                            >
+                                Welcome to the Awesome Currency Converter
+                            </Typography>
                             {children}
                         </Content>
                     </div>
