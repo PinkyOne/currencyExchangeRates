@@ -8,5 +8,6 @@
 
 [options]
 esproposal.decorators=ignore
+module.system.node.resolve_dirname=src
 
 [strict]
