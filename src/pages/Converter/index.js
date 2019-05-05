@@ -17,6 +17,10 @@ class Converter extends Component<Props> {
 
     onChange = ({target: {value}}: SyntheticInputEvent<EventTarget>) => this.stringToConvert = value;
 
+    convertCurrencies = async () => {
+
+    };
+
     render(): React$Node {
         return (
             <Card>
@@ -30,7 +34,11 @@ class Converter extends Component<Props> {
                     />
                 </CardContent>
                 <CardActions>
-                    <Button variant="contained" color="primary">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.convertCurrencies}
+                    >
                         Convert
                     </Button>
                 </CardActions>
