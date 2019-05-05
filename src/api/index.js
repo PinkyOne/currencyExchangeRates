@@ -7,6 +7,8 @@ export const getLatestCurrencies = () => axios.get('https://openexchangerates.or
     params: {app_id: exchangeApiKey}
 });
 
+export const getCurrencies = () => axios.get('https://openexchangerates.org/api/currencies.json');
+
 export const getCurrentCurrency = () => axios.get('https://api.ipgeolocation.io/ipgeo',{
     params: {apiKey: geoLocationApiKey}
 });

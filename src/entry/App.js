@@ -1,6 +1,5 @@
 import React from 'react';
 import AppRouter from "./AppRouter";
-import Layout from "components/Layout";
 
 import {StyledApp} from "./styles";
 
