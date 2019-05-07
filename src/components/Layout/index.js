@@ -1,61 +1,30 @@
 // @flow
 
-import React, {Component} from 'react';
-import {computed} from 'mobx';
-import {observer} from 'mobx-react';
-import {Link} from 'react-router-dom';
-import {withRouter} from 'react-router';
+import React from 'react';
 
-import type {Router} from 'react-router-dom';
-
-import AppBar from '@material-ui/core/AppBar';
-import Tab from '@material-ui/core/Tab';
 import NoSsr from '@material-ui/core/NoSsr';
-import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 
-import {CONVERTER, CURRENCIES_LIST} from 'routes';
+import {WELCOME_LABEL} from "consts";
 
 import {Content, CustomPaper} from './styled';
+import AppBar from "./components/AppBar";
 
-
-function LinkTab(props) {
-    return <Tab component={Link} {...props} />;
-}
-
-@withRouter
-@observer
-class Layout extends Component<Router> {
-    @computed
-    get tabValue(): number {
-        return this.props.history.location.pathname === CURRENCIES_LIST ? 1 : 0
-    }
-
-    render() {
-        const {children} = this.props;
-        const {tabValue} = this;
-        return (
-            <CustomPaper elevation={10}>
-                <NoSsr>
-                    <AppBar position="static">
-                        <Tabs variant="fullWidth" value={tabValue}>
-                            <LinkTab label="Converter" to={CONVERTER}/>
-                            <LinkTab label="Currencies List" to={CURRENCIES_LIST}/>
-                        </Tabs>
-                    </AppBar>
-                    <Content>
-                        <Typography
-                            variant="h6"
-                            gutterBottom
-                        >
-                            Welcome to the Awesome Currency Converter
-                        </Typography>
-                        {children}
-                    </Content>
-                </NoSsr>
-            </CustomPaper>
-        );
-    }
-}
+const Layout = ({children}) => (
+    <CustomPaper elevation={10}>
+        <NoSsr>
+            <AppBar/>
+            <Content>
+                <Typography
+                    variant="h6"
+                    gutterBottom
+                >
+                    {WELCOME_LABEL}
+                </Typography>
+                {children}
+            </Content>
+        </NoSsr>
+    </CustomPaper>
+);
 
 export default Layout;
