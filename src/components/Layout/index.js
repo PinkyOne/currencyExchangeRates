@@ -37,23 +37,21 @@ class Layout extends Component<Router> {
         return (
             <CustomPaper elevation={10}>
                 <NoSsr>
-                    <div>
-                        <AppBar position="static">
-                            <Tabs variant="fullWidth" value={tabValue}>
-                                <LinkTab label="Converter" to={CONVERTER}/>
-                                <LinkTab label="Currencies List" to={CURRENCIES_LIST}/>
-                            </Tabs>
-                        </AppBar>
-                        <Content>
-                            <Typography
-                                variant="h6"
-                                gutterBottom
-                            >
-                                Welcome to the Awesome Currency Converter
-                            </Typography>
-                            {children}
-                        </Content>
-                    </div>
+                    <AppBar position="static">
+                        <Tabs variant="fullWidth" value={tabValue}>
+                            <LinkTab label="Converter" to={CONVERTER}/>
+                            <LinkTab label="Currencies List" to={CURRENCIES_LIST}/>
+                        </Tabs>
+                    </AppBar>
+                    <Content>
+                        <Typography
+                            variant="h6"
+                            gutterBottom
+                        >
+                            Welcome to the Awesome Currency Converter
+                        </Typography>
+                        {children}
+                    </Content>
                 </NoSsr>
             </CustomPaper>
         );
