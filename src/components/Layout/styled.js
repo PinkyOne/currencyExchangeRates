@@ -11,5 +11,5 @@ export const Content = styled.div`
 
 export const CustomPaper = mStyled(Paper)({
     width: 600,
-    height: 500,
+    minHeight: 500,
 });
