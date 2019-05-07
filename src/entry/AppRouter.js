@@ -1,13 +1,13 @@
-import React from "react";
-import {Router, Route} from "react-router-dom";
-import {createBrowserHistory} from "history";
+import React from 'react';
+import {Router, Route} from 'react-router-dom';
+import {createBrowserHistory} from 'history';
 
-import {CONVERTER, CURRENCIES_LIST, HOME} from "routes";
+import {CONVERTER, CURRENCIES_LIST, HOME} from 'routes';
 
-import Layout from "components/Layout";
+import Layout from 'components/Layout';
 
-import Converter from "pages/Converter";
-import CurrenciesList from "pages/CurrenciesList";
+import Converter from 'pages/Converter';
+import CurrenciesList from 'pages/CurrenciesList';
 
 
 const history = createBrowserHistory();

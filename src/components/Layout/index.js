@@ -1,22 +1,23 @@
 // @flow
 
-import React, {Component} from "react";
-import {observer} from "mobx-react";
-import {computed, observable} from "mobx";
-import {Link} from "react-router-dom";
-import {withRouter} from "react-router";
+import React, {Component} from 'react';
+import {computed} from 'mobx';
+import {observer} from 'mobx-react';
+import {Link} from 'react-router-dom';
+import {withRouter} from 'react-router';
 
-import AppBar from "@material-ui/core/AppBar";
-import Tab from "@material-ui/core/Tab";
-import NoSsr from "@material-ui/core/NoSsr";
-import Tabs from "@material-ui/core/Tabs";
-import Typography from "@material-ui/core/Typography";
+import type {Router} from 'react-router-dom';
 
-import {CONVERTER, CURRENCIES_LIST} from "routes";
+import AppBar from '@material-ui/core/AppBar';
+import Tab from '@material-ui/core/Tab';
+import NoSsr from '@material-ui/core/NoSsr';
+import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
 
-import {Content, CustomPaper} from "./styled";
+import {CONVERTER, CURRENCIES_LIST} from 'routes';
 
-import type {Router} from "react-router-dom";
+import {Content, CustomPaper} from './styled';
+
 
 function LinkTab(props) {
     return <Tab component={Link} {...props} />;

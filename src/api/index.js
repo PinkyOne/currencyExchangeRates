@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const exchangeApiKey = process.env.REACT_APP_EXCHANGE_API_KEY;
 const geoLocationApiKey = process.env.REACT_APP_GEOLOCATION_API_KEY;
