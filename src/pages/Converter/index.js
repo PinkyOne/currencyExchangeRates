@@ -2,17 +2,17 @@
 
 import React, {Component} from 'react';
 import {observable} from 'mobx';
-import {observer} from 'mobx-react';
+import {inject, observer} from 'mobx-react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CardActions from '@material-ui/core/CardActions';
 
 import {Card, CardContent} from 'components/Card';
-
-import {parseStringToConvert} from 'utils/converter';
+import {Typography} from "@material-ui/core";
 
 type Props = {};
 
+@inject("exchangeRatesStore")
 @observer
 class Converter extends Component<Props> {
     @observable stringToConvert: string = '';
@@ -21,7 +21,8 @@ class Converter extends Component<Props> {
     onChange = ({target: {value}}: SyntheticInputEvent<EventTarget>) => this.stringToConvert = value;
 
     convertCurrencies = () => {
-        parseStringToConvert(this.stringToConvert);
+        console.log(this.props);
+        // console.log(exchangesRatesStore.convertCurrencies(parseStringToConvert(this.stringToConvert)));
     };
 
     render(): React$Node {
@@ -36,6 +37,7 @@ class Converter extends Component<Props> {
                                value={this.stringToConvert}
                                autoFocus
                     />
+                    <Typography></Typography>
                 </CardContent>
                 <CardActions>
                     <Button variant="contained"

@@ -1,9 +1,13 @@
 import React from 'react';
-import AppRouter from './AppRouter';
+import {Provider} from 'mobx-react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import {createGenerateClassName} from '@material-ui/core/styles';
 
+import AppRouter from './AppRouter';
+
 import {StyledApp} from './styles';
+
+import store from 'stores';
 
 const generateClassName = createGenerateClassName({
     dangerouslyUseGlobalCSS: false,
@@ -13,9 +17,11 @@ const generateClassName = createGenerateClassName({
 function App() {
     return (
         <JssProvider generateClassName={generateClassName}>
-            <StyledApp>
-                <AppRouter/>
-            </StyledApp>
+            <Provider currenciesStore={store.currenciesStore} exchangeRatesStore={store.exchangeRatesStore}>
+                <StyledApp>
+                    <AppRouter/>
+                </StyledApp>
+            </Provider>
         </JssProvider>
     );
 }

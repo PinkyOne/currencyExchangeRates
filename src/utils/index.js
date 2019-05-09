@@ -1,4 +1,4 @@
-// flow
+// @flow
 export type ConvertObject = {
     value: number,
     from: string,
@@ -10,7 +10,7 @@ export const parseStringToConvert = (stringToConvert: string): ConvertObject | n
     const result = stringToConvert.match(regex);
     if (result) {
         const [, value, from, to] = result;
-        return {value: Number(value), from, to};
+        return {value: Number(value), from: from.toUpperCase(), to: to.toUpperCase()};
     }
-    return result;
+    return null;
 };

@@ -1,4 +1,4 @@
-import {parseStringToConvert} from './converter';
+import {parseStringToConvert} from './index';
 
 test('parse 1 USD to RUB', () => {
     const stringToConvert = '1 USD in RUB';
