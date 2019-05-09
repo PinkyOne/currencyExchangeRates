@@ -1,9 +1,6 @@
 // @flow
-export type ConvertObject = {
-    value: number,
-    from: string,
-    to: string
-};
+
+import type {ConvertObject} from './types';
 
 export const parseStringToConvert = (stringToConvert: string): ConvertObject | null => {
     const regex = /^(\d+|\d+\.\d+)\s+(\w\w\w)\s+in\s+(\w\w\w)$/si;

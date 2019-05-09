@@ -13,15 +13,19 @@ import Typography from '@material-ui/core/Typography';
 import {Card, CardContent} from 'components/Card';
 import {parseStringToConvert} from 'utils';
 
-type Props = {};
+import type {ExchangeRatesStore} from 'stores/exchangesRates/types';
 
-@inject("exchangeRatesStore")
+type Props = {
+    exchangeRatesStore: ExchangeRatesStore | any
+};
+
+@inject('exchangeRatesStore')
 @observer
 class Converter extends Component<Props> {
     @observable stringToConvert: string = '';
     @observable convertError: string | null = null;
 
-    @observable convertResults: Array<number> = [];
+    @observable convertResults: Array<string> = [];
 
     onChange = ({target: {value}}: SyntheticInputEvent<EventTarget>) => this.stringToConvert = value;
 
@@ -38,23 +42,25 @@ class Converter extends Component<Props> {
     };
 
     render(): React$Node {
+        const {convertError, convertResults, stringToConvert, onChange, convertCurrencies} = this;
+
         return (
             <Card>
                 <CardContent>
                     <TextField variant="outlined"
                                margin="dense"
-                               helperText={this.convertError || "Enter query in format: 1 USD in RUB"}
-                               error={this.convertError}
-                               onChange={this.onChange}
-                               value={this.stringToConvert}
+                               helperText={convertError || 'Enter query in format: 1 USD in RUB'}
+                               error={convertError}
+                               onChange={onChange}
+                               value={stringToConvert}
                                autoFocus
                     />
-                    {this.convertResults.map((result) => (<Typography>{result}</Typography>))}
+                    {convertResults.map((result) => (<Typography>{result}</Typography>))}
                 </CardContent>
                 <CardActions>
                     <Button variant="contained"
                             color="primary"
-                            onClick={this.convertCurrencies}
+                            onClick={convertCurrencies}
                     >
                         Convert
                     </Button>

@@ -6,17 +6,23 @@ import {inject, observer} from 'mobx-react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import type {CurrenciesStore} from 'stores/currencies/types';
+
 type Props = {
-    currenciesStore: {
-        changeBasicCurrency: (code: string) => void,
-        basicCurrency: BasicCurrency,
-        currencies: Currencies,
-    }
+    currenciesStore: CurrenciesStore | any
 };
 
 @inject(['currenciesStore'])
 @observer
 class BasicCurrencySelector extends Component<Props> {
+    static defaultProps = {
+        currenciesStore: {
+            changeBasicCurrency: null,
+            basicCurrency: null,
+            currencies: null,
+        }
+    };
+
     onChange = ({target: {value}}: SyntheticInputEvent<EventTarget>) => {
         const {currenciesStore} = this.props;
         currenciesStore.changeBasicCurrency(value);
