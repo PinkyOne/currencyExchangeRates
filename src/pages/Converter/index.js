@@ -3,6 +3,8 @@
 import React, {Component} from 'react';
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
+import moment from 'moment';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CardActions from '@material-ui/core/CardActions';
@@ -27,10 +29,12 @@ class Converter extends Component<Props> {
         const {stringToConvert, convertResults, props: {exchangeRatesStore}} = this;
         const convertObject = parseStringToConvert(stringToConvert);
         const conversionResult = exchangeRatesStore.convertCurrencies(convertObject);
-
-        convertResults.unshift(
-            `${stringToConvert}: ${conversionResult}`
+        const convertResultsSnapshot = [...convertResults];
+        convertResultsSnapshot.unshift(
+            `${moment().format('MMMM Do YYYY, h:mm:ss a')} ${stringToConvert}: ${conversionResult}`
         );
+        if (convertResultsSnapshot.length > 3) convertResultsSnapshot.pop();
+        this.convertResults = convertResultsSnapshot;
     };
 
     render(): React$Node {
