@@ -1,4 +1,5 @@
 import {flow, types} from 'mobx-state-tree';
+import numeral from 'numeral';
 import {getExchangeRates} from 'api';
 
 const ExchangeRate = types.model('ExchangeRate', {
@@ -43,7 +44,7 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
             if (from === to) return value;
             const exchangeRateFrom = self.exchangeRate(from);
             const exchangeRateTo = self.exchangeRate(to);
-            return value * exchangeRateTo / exchangeRateFrom;
+            return numeral(value * exchangeRateTo / exchangeRateFrom).format('0,0.00');
         }
     }));
 

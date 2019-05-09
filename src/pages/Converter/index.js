@@ -6,9 +6,10 @@ import {inject, observer} from 'mobx-react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
 
 import {Card, CardContent} from 'components/Card';
-import {Typography} from "@material-ui/core";
+import {parseStringToConvert} from 'utils';
 
 type Props = {};
 
@@ -18,11 +19,18 @@ class Converter extends Component<Props> {
     @observable stringToConvert: string = '';
     @observable convertError: string | null = null;
 
+    @observable convertResults: Array<number> = [];
+
     onChange = ({target: {value}}: SyntheticInputEvent<EventTarget>) => this.stringToConvert = value;
 
     convertCurrencies = () => {
-        console.log(this.props);
-        // console.log(exchangesRatesStore.convertCurrencies(parseStringToConvert(this.stringToConvert)));
+        const {stringToConvert, convertResults, props: {exchangeRatesStore}} = this;
+        const convertObject = parseStringToConvert(stringToConvert);
+        const conversionResult = exchangeRatesStore.convertCurrencies(convertObject);
+
+        convertResults.unshift(
+            `${stringToConvert}: ${conversionResult}`
+        );
     };
 
     render(): React$Node {
@@ -37,7 +45,7 @@ class Converter extends Component<Props> {
                                value={this.stringToConvert}
                                autoFocus
                     />
-                    <Typography></Typography>
+                    {this.convertResults.map((result) => (<Typography>{result}</Typography>))}
                 </CardContent>
                 <CardActions>
                     <Button variant="contained"

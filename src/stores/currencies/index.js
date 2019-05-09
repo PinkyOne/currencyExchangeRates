@@ -23,6 +23,9 @@ export const CurrenciesStore = types.model('CurrenciesStore', {
     basicCurrency: types.maybe(BasicCurrency)
 }).actions(self => ({
     afterCreate() {
+        self.init();
+    },
+    init() {
         self.fetch();
         self.fetchBasicCurrency();
     },
