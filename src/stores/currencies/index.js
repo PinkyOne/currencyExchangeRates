@@ -20,7 +20,7 @@ export const CurrenciesStore = types.model('CurrenciesStore', {
     isFetchingCurrencies: types.optional(types.boolean, false),
     isFetchingBasicCurrency: types.optional(types.boolean, false),
     currencies: types.array(Currency),
-    basicCurrency: types.maybe(BasicCurrency)
+    basicCurrency: types.optional(BasicCurrency, {code: ''})
 }).actions(self => ({
     afterCreate() {
         self.init();
@@ -48,7 +48,10 @@ export const CurrenciesStore = types.model('CurrenciesStore', {
         } finally {
             self.isFetchingBasicCurrency = false;
         }
-    })
+    }),
+    changeBasicCurrency(code) {
+        self.basicCurrency = {code};
+    }
 }));
 
 const store = CurrenciesStore.create({});

@@ -5,7 +5,8 @@ import {observer} from "mobx-react";
 import {computed, observable} from "mobx";
 import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router';
-import {styled} from "@material-ui/styles";
+import styled from 'styled-components';
+import {styled as mStyled} from "@material-ui/styles";
 
 import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,6 +15,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Typography from "@material-ui/core/Typography";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import BasicCurrencySelector from './components/BasicCurrencySelector';
 
 import {CONVERTER, CURRENCIES_LIST} from "routes";
 import {CONVERTER_LABEL, CURRENCIES_LIST_LABEL} from "consts";
@@ -24,10 +27,14 @@ function LinkMenuItem(props) {
     return <MenuItem component={Link} {...props} />;
 }
 
-const StyledToolbar = styled(Toolbar)({
+const StyledToolbar = mStyled(Toolbar)({
     display: 'flex',
     justifyContent: 'space-between'
 });
+
+const Controls = styled.div`
+    display: flex;
+`;
 
 @withRouter
 @observer
@@ -55,24 +62,29 @@ class AppBar extends Component<Router> {
     };
 
     render() {
-        const {anchorEl,
+        const {
+            anchorEl,
             openMenu,
             title,
             closeMenu,
-            isOnCurrenciesList} = this;
+            isOnCurrenciesList
+        } = this;
 
         return (<React.Fragment>
             <MuiAppBar position="static">
                 <StyledToolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="Menu"
-                        aria-owns={anchorEl ? 'menu' : undefined}
-                        aria-haspopup="true"
-                        onClick={openMenu}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
+                    <Controls>
+                        <IconButton
+                            color="inherit"
+                            aria-label="Menu"
+                            aria-owns={anchorEl ? 'menu' : undefined}
+                            aria-haspopup="true"
+                            onClick={openMenu}
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        <BasicCurrencySelector/>
+                    </Controls>
                     <Typography variant="h6" color="inherit">
                         {title}
                     </Typography>

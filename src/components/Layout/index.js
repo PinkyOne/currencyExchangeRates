@@ -10,7 +10,7 @@ import {WELCOME_LABEL} from "consts";
 import {Content, CustomPaper} from './styled';
 import AppBar from "./components/AppBar";
 
-const Layout = ({children}) => (
+const Layout = ({children}: {children: React$Node}) => (
     <CustomPaper elevation={10}>
         <NoSsr>
             <AppBar/>
