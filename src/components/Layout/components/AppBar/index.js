@@ -5,11 +5,8 @@ import {observer} from "mobx-react";
 import {computed, observable} from "mobx";
 import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router';
-import styled from 'styled-components';
-import {styled as mStyled} from "@material-ui/styles";
 
 import MuiAppBar from '@material-ui/core/AppBar';
-import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from "@material-ui/core/Typography";
@@ -21,20 +18,13 @@ import BasicCurrencySelector from './components/BasicCurrencySelector';
 import {CONVERTER, CURRENCIES_LIST} from "routes";
 import {CONVERTER_LABEL, CURRENCIES_LIST_LABEL} from "consts";
 
+import {Controls, StyledToolbar} from './styles';
+
 import type {Router} from 'react-router-dom';
 
 function LinkMenuItem(props) {
     return <MenuItem component={Link} {...props} />;
 }
-
-const StyledToolbar = mStyled(Toolbar)({
-    display: 'flex',
-    justifyContent: 'space-between'
-});
-
-const Controls = styled.div`
-    display: flex;
-`;
 
 @withRouter
 @observer
