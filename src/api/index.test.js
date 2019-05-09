@@ -1,8 +1,8 @@
 import axios from 'axios/index';
 import {
-    getLatestCurrencies,
+    getExchangeRates,
     getCurrencies,
-    getCurrentCurrency
+    getCurrentCurrencyCode
 } from "api";
 
 jest.mock('axios');
@@ -192,8 +192,9 @@ test('get latest', async () => {
     };
     axios.get.mockResolvedValue(mockedResponse);
 
-    const resp = await getLatestCurrencies();
-    expect(resp).toMatchObject(mockedResponse);
+    const {base, rates} = await getExchangeRates();
+    expect(rates).toMatchObject(mockedResponse.data.rates);
+    expect(base).toBe(mockedResponse.data.base);
 });
 
 test('get currencies', async () => {
@@ -376,8 +377,8 @@ test('get currencies', async () => {
     };
     axios.get.mockResolvedValue(mockedResponse);
 
-    const resp = await getCurrencies();
-    expect(resp).toMatchObject(mockedResponse);
+    const currencies = await getCurrencies();
+    expect(currencies).toMatchObject(mockedResponse.data);
 });
 
 test('get current currency', async () => {
@@ -388,6 +389,6 @@ test('get current currency', async () => {
     };
     axios.get.mockResolvedValue(mockedResponse);
 
-    const resp = await getCurrentCurrency();
-    expect(resp).toMatchObject(mockedResponse);
+    const code = await getCurrentCurrencyCode();
+    expect(code).toBe('RUB');
 });
