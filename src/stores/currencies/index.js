@@ -1,4 +1,4 @@
-import {flow, types, getParent} from 'mobx-state-tree';
+import {flow, getParent, types} from 'mobx-state-tree';
 import {getCurrencies, getCurrentCurrencyCode} from 'api';
 
 const Currency = types.model('Currency', {

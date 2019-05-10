@@ -1,26 +1,25 @@
 // @flow
 
 import React, {Component} from 'react';
-import {observer} from "mobx-react";
-import {computed, observable} from "mobx";
+import {observer} from 'mobx-react';
+import {computed, observable} from 'mobx';
+import type {Router} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router';
 
 import MuiAppBar from '@material-ui/core/AppBar';
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Typography from "@material-ui/core/Typography";
+import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import BasicCurrencySelector from './components/BasicCurrencySelector';
 
-import {CONVERTER, CURRENCIES_LIST} from "routes";
-import {CONVERTER_LABEL, CURRENCIES_LIST_LABEL} from "consts";
+import {CONVERTER, CURRENCIES_LIST} from 'routes';
+import {CONVERTER_LABEL, CURRENCIES_LIST_LABEL} from 'consts';
 
 import {Controls, StyledToolbar} from './styles';
-
-import type {Router} from 'react-router-dom';
 
 function LinkMenuItem(props) {
     return <MenuItem component={Link} {...props} />;

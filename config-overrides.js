@@ -6,7 +6,7 @@ const {
     addBabelPresets,
     fixBabelImports,
     addLessLoader,
-} = require("customize-cra");
+} = require('customize-cra');
 
 
 module.exports = {
@@ -14,10 +14,10 @@ module.exports = {
         addDecoratorsLegacy(),
         disableEsLint(),
         ...addBabelPlugins(
-            "babel-plugin-styled-components"
+            'babel-plugin-styled-components'
         ),
-        fixBabelImports("react-app-rewire-mobx", {
-            libraryDirectory: "",
+        fixBabelImports('react-app-rewire-mobx', {
+            libraryDirectory: '',
             camel2DashComponentName: false
         }),
     ),

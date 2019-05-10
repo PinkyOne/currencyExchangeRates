@@ -1,9 +1,5 @@
-import axios from 'axios/index';
-import {
-    getExchangeRates,
-    getCurrencies,
-    getCurrentCurrencyCode
-} from "api";
+import axios from 'axios';
+import {getCurrencies, getCurrentCurrencyCode, getExchangeRates} from 'api';
 
 jest.mock('axios');
 

@@ -32,7 +32,8 @@ class Converter extends Component<Props> {
     convertCurrencies = () => {
         const {stringToConvert, convertResults, props: {exchangeRatesStore}} = this;
         const convertObject = parseStringToConvert(stringToConvert);
-        const conversionResult = exchangeRatesStore.convertCurrencies(convertObject);
+        let conversionResult = exchangeRatesStore.convertCurrencies(convertObject);
+        if (conversionResult === 'NaN') conversionResult = exchangeRatesStore.convertCurrencies(convertObject, false);
         const convertResultsSnapshot = [...convertResults];
         convertResultsSnapshot.unshift(
             `${moment().format('MMMM Do YYYY, h:mm:ss a')} ${stringToConvert}: ${conversionResult}`

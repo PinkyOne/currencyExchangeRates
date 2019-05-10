@@ -1,11 +1,17 @@
-import {flow, types} from 'mobx-state-tree';
+import {applySnapshot, flow, types} from 'mobx-state-tree';
 import numeral from 'numeral';
 import {getExchangeRates} from 'api';
 
 const ExchangeRate = types.model('ExchangeRate', {
-    code: types.string,
-    rate: types.number,
-});
+        code: types.string,
+        rate: types.number,
+    })
+    .views(self => ({
+        get displayValue() {
+            const {code, rate} = self;
+            return `${code} - ${rate}`;
+        }
+    }));
 
 export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
         isFetching: types.optional(types.boolean, false),
@@ -27,7 +33,23 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
             } finally {
                 self.isFetching = false;
             }
-        })
+        }),
+        updateBaseCurrencyCode(newBaseCode) {
+            const {baseCurrencyCode, exchangeRates, convertCurrencies} = self;
+            const newExchangeRates = [
+                ...exchangeRates
+                    .filter(({code}) => code !== newBaseCode)
+                    .map(({code}) => ({
+                        code,
+                        rate: Number(convertCurrencies({value: 1, from: newBaseCode, to: code}))
+                    })),
+                {
+                    code: baseCurrencyCode,
+                    rate: Number(convertCurrencies({value: 1, from: baseCurrencyCode, to: newBaseCode}))
+                }
+            ];
+            applySnapshot(self, {...self, baseCurrencyCode: newBaseCode, exchangeRates: newExchangeRates})
+        }
     }))
     .views(self => ({
         exchangeRate(currencyCode) {
@@ -40,11 +62,21 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
 
             return exchangeRate.rate;
         },
-        convertCurrencies({value, from, to}) {
+        convertCurrencies({value, from, to}, withFormatting = true) {
             if (from === to) return value;
             const exchangeRateFrom = self.exchangeRate(from);
             const exchangeRateTo = self.exchangeRate(to);
-            return numeral(value * exchangeRateTo / exchangeRateFrom).format('0,0.00');
+            if (isNaN((value * exchangeRateTo / exchangeRateFrom))) {
+                debugger
+            }
+            const convertedValue = value * exchangeRateTo / exchangeRateFrom;
+            return withFormatting ? numeral(convertedValue).format('0,0.00') : convertedValue;
+        },
+        customBaseCodeExchangeRates(baseCode) {
+            const {exchangeRates, convertCurrencies} = self;
+
+            return exchangeRates
+                .map(({code}) => (`${code} - ${convertCurrencies({value: 1, from: baseCode, to: code}, false)}`));
         }
     }));
 
