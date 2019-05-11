@@ -4,23 +4,46 @@ import {parseStringToConvert} from 'utils';
 
 const ConvertResult = types.model('ConvertResult', {
     conversionString: types.string,
-    timestamp: types.optional(types.number, () => moment().unix()),
-
+    timestamp: types.optional(types.number, () => moment().unix())
 }).views(self => ({
     get convertObject() {
         return parseStringToConvert(self.conversionString);
     },
     get result() {
         const {exchangeRatesStore} = getRoot(self);
-        const {convertObject} = self;
-        let conversionResult = exchangeRatesStore.convertCurrencies(convertObject);
-        if (conversionResult === 'NaN') conversionResult = exchangeRatesStore.convertCurrencies(convertObject, false);
+        const {convertObject, error: parseError} = self;
 
-        return conversionResult;
+        let {result: conversionResult, error: conversionError} = parseError
+            ? {}
+            :exchangeRatesStore.convertCurrencies(convertObject);
+        if (parseError || conversionError) return {parseError, conversionError};
+
+        if (conversionResult === 'NaN') {
+            const {result} = exchangeRatesStore.convertCurrencies(convertObject, false);
+            conversionResult = result;
+        }
+
+        return {conversionResult};
+    },
+    get error() {
+        return !self.convertObject;
     },
     get displayValue() {
-        const {conversionString, timestamp, result} = self;
-        return `${conversionString} at ${moment.unix(timestamp).format('MMMM Do YYYY, h:mm:ss a')}: ${result}`;
+        const {
+            conversionString, timestamp, result: {
+                parseError,
+                conversionError,
+                conversionResult
+            }
+        } = self;
+        const dateTimeString = moment.unix(timestamp).format('MMMM Do YYYY, h:mm:ss a');
+
+        if (parseError)
+            return `${conversionString} at ${dateTimeString}: Cannot recognize query`;
+        if (conversionError)
+            return `${conversionString} at ${dateTimeString}: Cannot convert with given query`;
+
+        return `${conversionString} at ${dateTimeString}: ${conversionResult}`;
     }
 }));
 

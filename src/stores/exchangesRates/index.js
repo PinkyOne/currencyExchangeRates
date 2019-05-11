@@ -66,11 +66,14 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
             if (from === to) return value;
             const exchangeRateFrom = self.exchangeRate(from);
             const exchangeRateTo = self.exchangeRate(to);
-            if (isNaN((value * exchangeRateTo / exchangeRateFrom))) {
-                debugger
-            }
+            const error = !(exchangeRateFrom && exchangeRateTo);
+            if (error) return {error};
+
             const convertedValue = value * exchangeRateTo / exchangeRateFrom;
-            return withFormatting ? numeral(convertedValue).format('0,0.00') : convertedValue;
+            return {
+                error,
+                result: withFormatting ? numeral(convertedValue).format('0,0.00') : convertedValue
+            };
         },
         customBaseCodeExchangeRates(baseCode) {
             const {exchangeRates, convertCurrencies} = self;
