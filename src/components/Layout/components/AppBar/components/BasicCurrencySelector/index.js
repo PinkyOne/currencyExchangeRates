@@ -5,6 +5,7 @@ import {inject, observer} from 'mobx-react';
 
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import type {CurrenciesStore} from 'stores/currencies/types';
 
@@ -29,18 +30,23 @@ class BasicCurrencySelector extends Component<Props> {
     };
 
     render() {
-        const {currenciesStore} = this.props;
+        const {basicCurrency, currencies, isFetching} = this.props.currenciesStore;
         return (
-            <Select
-                value={currenciesStore.basicCurrency.code}
-                onChange={this.onChange}
-            >
-                {currenciesStore.currencies.map(({code, name}) => (
-                    <MenuItem key={code} value={code}>
-                        {name}
-                    </MenuItem>
-                ))}
-            </Select>
+            <React.Fragment>
+                {isFetching
+                    ? <CircularProgress/>
+                    : <Select
+                        value={basicCurrency.code}
+                        onChange={this.onChange}
+                    >
+                        {currencies.map(({code, name}) => (
+                            <MenuItem key={code} value={code}>
+                                {name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                }
+            </React.Fragment>
         );
     };
 }

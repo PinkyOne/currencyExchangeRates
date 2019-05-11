@@ -52,6 +52,11 @@ export const CurrenciesStore = types.model('CurrenciesStore', {
     changeBasicCurrency(code) {
         self.basicCurrency = {code};
     }
+})).views(self => ({
+    get isFetching() {
+        const {isFetchingCurrencies, isFetchingBasicCurrency} = self;
+        return isFetchingCurrencies || isFetchingBasicCurrency;
+    }
 }));
 
 const store = CurrenciesStore.create({});

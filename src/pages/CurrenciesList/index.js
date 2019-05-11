@@ -32,12 +32,11 @@ class CurrenciesList extends Component<Props> {
                 isFetching: isExchangeRatesStoreFetching
             },
             currenciesStore: {
-                isFetchingCurrencies,
-                isFetchingBasicCurrency
+                isFetching: isCurrenciesStoreFetching
             }
         } = this.props;
 
-        return isExchangeRatesStoreFetching || isFetchingCurrencies || isFetchingBasicCurrency;
+        return isExchangeRatesStoreFetching || isCurrenciesStoreFetching;
     }
 
     render() {

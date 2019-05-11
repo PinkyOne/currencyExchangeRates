@@ -8,7 +8,10 @@ export type ExchangeRate = {
 };
 
 export type ExchangeRatesStore = {
+    customBaseCodeExchangeRates: (code: string) => Array<string>,
+    fetch: () => Promise<void>,
     convertCurrencies: (convertObject: ConvertObject) => string,
     exchangeRate: (currencyCode: string)=> number,
-    exchangeRates: Array<ExchangeRate>
+    exchangeRates: Array<ExchangeRate>,
+    isFetching: boolean,
 };

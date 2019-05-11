@@ -35,11 +35,11 @@ class Converter extends Component<Props> {
     get isFetching() {
         const {
             exchangeRatesStore: {
-                isFetching: isExchangeRatesStoreFetching
+                isFetching
             },
         } = this.props;
 
-        return isExchangeRatesStoreFetching;
+        return isFetching;
     }
 
 
