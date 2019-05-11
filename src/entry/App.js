@@ -17,7 +17,11 @@ const generateClassName = createGenerateClassName({
 function App() {
     return (
         <JssProvider generateClassName={generateClassName}>
-            <Provider currenciesStore={store.currenciesStore} exchangeRatesStore={store.exchangeRatesStore}>
+            <Provider
+                currenciesStore={store.currenciesStore}
+                exchangeRatesStore={store.exchangeRatesStore}
+                converterStore={store.converterStore}
+            >
                 <StyledApp>
                     <AppRouter/>
                 </StyledApp>

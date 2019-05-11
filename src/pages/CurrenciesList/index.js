@@ -26,7 +26,7 @@ type Props = {
 @observer
 class CurrenciesList extends Component<Props> {
     @computed
-    get isFetching() {
+    get isFetching(): boolean {
         const {
             exchangeRatesStore: {
                 isFetching: isExchangeRatesStoreFetching
