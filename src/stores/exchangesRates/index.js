@@ -1,6 +1,7 @@
 import {applySnapshot, flow, types} from 'mobx-state-tree';
 import numeral from 'numeral';
 import {getExchangeRates} from 'api';
+import * as moment from 'moment';
 
 const ExchangeRate = types.model('ExchangeRate', {
         code: types.string,
@@ -17,6 +18,8 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
         isFetching: types.optional(types.boolean, false),
         baseCurrencyCode: types.maybe(types.string),
         exchangeRates: types.array(ExchangeRate),
+        timestamp: types.maybe(types.number),
+        fetchError: types.optional(types.boolean, false)
     })
     .actions(self => ({
         afterCreate() {
@@ -25,11 +28,13 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
         fetch: flow(function* () {
             self.isFetching = true;
             try {
-                const {rates, base} = yield getExchangeRates();
-                self.exchangeRates = Object.entries(rates).map(([code, rate]) => ({
+                const {rates, base: baseCurrencyCode, timestamp} = yield getExchangeRates();
+                const exchangeRates = Object.entries(rates).map(([code, rate]) => ({
                     code, rate
                 }));
-                self.baseCurrencyCode = base;
+                applySnapshot(self, {baseCurrencyCode, exchangeRates, timestamp});
+            } catch (error) {
+                self.fetchError = !!error;
             } finally {
                 self.isFetching = false;
             }
@@ -49,6 +54,9 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
                 }
             ];
             applySnapshot(self, {...self, baseCurrencyCode: newBaseCode, exchangeRates: newExchangeRates})
+        },
+        resetFetchError(){
+            self.fetchError = false;
         }
     }))
     .views(self => ({
@@ -63,7 +71,7 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
             return exchangeRate.rate;
         },
         convertCurrencies({value, from, to}, withFormatting = true) {
-            if (from === to) return value;
+            if (from === to) return {result: value};
             const exchangeRateFrom = self.exchangeRate(from);
             const exchangeRateTo = self.exchangeRate(to);
             const error = !(exchangeRateFrom && exchangeRateTo);
@@ -79,7 +87,13 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
             const {exchangeRates, convertCurrencies} = self;
 
             return exchangeRates
-                .map(({code}) => (`${code} - ${convertCurrencies({value: 1, from: baseCode, to: code}, false)}`));
+                .map(({code}) => {
+                    const conversionResult = convertCurrencies({value: 1, from: baseCode, to: code}, false);
+                    return (`${code} - ${conversionResult.result}`)
+                });
+        },
+        get isExchangeRatesOutdated() {
+            return  moment.unix() - self.timestamp > 60 * 60 * 60;
         }
     }));
 

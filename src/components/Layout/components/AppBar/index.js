@@ -17,7 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import BasicCurrencySelector from './components/BasicCurrencySelector';
 
 import {CONVERTER, CURRENCIES_LIST} from 'routes';
-import {CONVERTER_LABEL, CURRENCIES_LIST_LABEL} from 'consts';
+import {CONVERTER_LABEL, CURRENCIES_LIST_LABEL} from 'consts/labels';
 
 import {Controls, StyledToolbar} from './styles';
 

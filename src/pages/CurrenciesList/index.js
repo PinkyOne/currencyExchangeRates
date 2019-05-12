@@ -21,8 +21,8 @@ type Props = {
     currenciesStore: CurrenciesStore | any
 };
 
-@inject(['currenciesStore'])
-@inject(['exchangeRatesStore'])
+@inject('currenciesStore')
+@inject('exchangeRatesStore')
 @observer
 class CurrenciesList extends Component<Props> {
     @computed

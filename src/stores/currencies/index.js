@@ -20,7 +20,9 @@ export const CurrenciesStore = types.model('CurrenciesStore', {
     isFetchingCurrencies: types.optional(types.boolean, false),
     isFetchingBasicCurrency: types.optional(types.boolean, false),
     currencies: types.array(Currency),
-    basicCurrency: types.optional(BasicCurrency, {code: ''})
+    basicCurrency: types.optional(BasicCurrency, {code: ''}),
+    fetchCurrenciesError: types.optional(types.boolean, false),
+    fetchBasicCurrencyError: types.optional(types.boolean, false)
 }).actions(self => ({
     afterCreate() {
         self.init();
@@ -36,6 +38,8 @@ export const CurrenciesStore = types.model('CurrenciesStore', {
             self.currencies = Object.entries(currencies).map(([code, name]) => ({
                 code, name
             }));
+        } catch (error) {
+            self.fetchCurrenciesError = !!error;
         } finally {
             self.isFetchingCurrencies = false;
         }
@@ -45,12 +49,20 @@ export const CurrenciesStore = types.model('CurrenciesStore', {
         try {
             const code = yield getCurrentCurrencyCode();
             self.basicCurrency = {code};
+        } catch (error) {
+            self.fetchBasicCurrencyError = !!error;
         } finally {
             self.isFetchingBasicCurrency = false;
         }
     }),
     changeBasicCurrency(code) {
         self.basicCurrency = {code};
+    },
+    resetFetchBasicCurrencyError() {
+        self.fetchBasicCurrencyError = false;
+    },
+    resetFetchCurrenciesError() {
+        self.fetchCurrenciesError = false;
     }
 })).views(self => ({
     get isFetching() {
