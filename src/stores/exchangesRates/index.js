@@ -35,7 +35,6 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
                     code, rate
                 }));
 
-                // const ONE_HOUR = 1000 * 6;
                 const ONE_HOUR = 1000 * 60 * 60;
                 const refreshTimerId = setTimeout(() => self.setRatesIsOutdated(true), ONE_HOUR);
 
