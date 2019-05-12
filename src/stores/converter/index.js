@@ -39,9 +39,9 @@ const ConvertResult = types.model('ConvertResult', {
         const dateTimeString = moment.unix(timestamp).format('MMMM Do YYYY, h:mm:ss a');
 
         if (parseError)
-            return `${conversionString} at ${dateTimeString}: Cannot recognize query`;
+            return `${conversionString}: Cannot recognize query`;
         if (conversionError)
-            return `${conversionString} at ${dateTimeString}: Cannot convert with given query`;
+            return `${conversionString}: Cannot convert with given query`;
 
         return `${conversionString} at ${dateTimeString}: ${conversionResult}`;
     }
