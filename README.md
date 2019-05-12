@@ -1,3 +1,9 @@
+#Welcome to Awesome Currency Converter
+
+There is Implementation of [Appbooster test task](https://github.com/appbooster/test-assignments/blob/master/tasks/frontend.md)
+
+SPA contains 2 pages - Converter and Currencies List
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
