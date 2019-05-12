@@ -1,10 +1,11 @@
 import {applySnapshot, getEnv, getRoot, types} from 'mobx-state-tree';
 import moment from 'moment';
-import {parseStringToConvert} from 'utils';
+import {parseStringToConvert, generateId} from 'utils';
 
 const ConvertResult = types.model('ConvertResult', {
+    id: types.optional(types.identifier, generateId),
     conversionString: types.string,
-    timestamp: types.optional(types.number, () => moment().unix())
+    timestamp: types.optional(types.number, () => moment().unix()),
 }).views(self => ({
     get convertObject() {
         return parseStringToConvert(self.conversionString);

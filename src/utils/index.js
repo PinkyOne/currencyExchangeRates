@@ -11,3 +11,5 @@ export const parseStringToConvert = (stringToConvert: string): ConvertObject | n
     }
     return null;
 };
+
+export const generateId = (): string => `f${(~~(Math.random()*1e8)).toString(16)}`;

@@ -42,7 +42,7 @@ class AppBar extends Component<Router> {
             : CONVERTER_LABEL;
     }
 
-    openMenu = ({currentTarget}: Event) => {
+    openMenu = ({currentTarget}: SyntheticInputEvent<EventTarget>) => {
         this.anchorEl = currentTarget;
     };
 
@@ -66,7 +66,7 @@ class AppBar extends Component<Router> {
                         <IconButton
                             color="inherit"
                             aria-label="Menu"
-                            aria-owns={anchorEl ? 'menu' : undefined}
+                            aria-owns={anchorEl ? 'menu' : null}
                             aria-haspopup="true"
                             onClick={openMenu}
                         >

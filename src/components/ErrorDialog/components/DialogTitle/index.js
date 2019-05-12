@@ -22,11 +22,10 @@ const DialogTitle = withStyles(theme => ({
     return (
         <MuiDialogTitle disableTypography className={classes.root}>
             <Typography variant="h6">{title}</Typography>
-            {onClose ? (
-                <IconButton aria-label="Close" className={classes.closeButton} onClick={onClose}>
-                    <CloseIcon/>
-                </IconButton>
-            ) : null}
+            {onClose && <IconButton aria-label="Close" className={classes.closeButton} onClick={onClose}>
+                <CloseIcon/>
+            </IconButton>
+            }
         </MuiDialogTitle>
     );
 });

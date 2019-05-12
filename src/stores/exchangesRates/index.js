@@ -48,17 +48,19 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
         }),
         updateBaseCurrencyCode(newBaseCode) {
             const {baseCurrencyCode, exchangeRates, convertCurrencies} = self;
+            const oldExchangeRates = exchangeRates
+                .filter(({code}) => code !== newBaseCode)
+                .map(({code}) => ({
+                    code,
+                    rate: Number(convertCurrencies({value: 1, from: newBaseCode, to: code}))
+                }));
+            const newBaseExchangeRate = {
+                code: baseCurrencyCode,
+                rate: Number(convertCurrencies({value: 1, from: baseCurrencyCode, to: newBaseCode}))
+            };
             const newExchangeRates = [
-                ...exchangeRates
-                    .filter(({code}) => code !== newBaseCode)
-                    .map(({code}) => ({
-                        code,
-                        rate: Number(convertCurrencies({value: 1, from: newBaseCode, to: code}))
-                    })),
-                {
-                    code: baseCurrencyCode,
-                    rate: Number(convertCurrencies({value: 1, from: baseCurrencyCode, to: newBaseCode}))
-                }
+                ...oldExchangeRates,
+                newBaseExchangeRate
             ];
             applySnapshot(self, {...self, baseCurrencyCode: newBaseCode, exchangeRates: newExchangeRates})
         },

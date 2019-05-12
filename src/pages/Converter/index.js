@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {computed, observable} from 'mobx';
+import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 
 import Button from '@material-ui/core/Button';
@@ -31,18 +31,6 @@ class Converter extends Component<Props> {
 
     @observable convertResults: Array<string> = [];
 
-    @computed
-    get isFetching() {
-        const {
-            exchangeRatesStore: {
-                isFetching
-            },
-        } = this.props;
-
-        return isFetching;
-    }
-
-
     onChange = ({target: {value}}: SyntheticInputEvent<EventTarget>) => this.stringToConvert = value;
 
     convertCurrencies = () => {
@@ -52,12 +40,14 @@ class Converter extends Component<Props> {
 
     render() {
         const {
-            isFetching,
             convertError,
             stringToConvert,
             onChange,
             convertCurrencies,
-            props: {converterStore: {results}}
+            props: {
+                converterStore: {results},
+                exchangeRatesStore: {isFetching}
+            }
         } = this;
 
         return (
@@ -65,18 +55,19 @@ class Converter extends Component<Props> {
                 <CardContent>
                     {isFetching
                         ? <CircularProgress/>
-                        : <TextField variant="outlined"
-                                     margin="dense"
-                                     helperText={convertError || 'Enter query in format: 1 USD in RUB'}
-                                     error={convertError}
-                                     onChange={onChange}
-                                     value={stringToConvert}
-                                     autoFocus
+                        : <TextField
+                            variant="outlined"
+                            margin="dense"
+                            helperText={convertError || 'Enter query in format: 1 USD in RUB'}
+                            error={convertError}
+                            onChange={onChange}
+                            value={stringToConvert}
+                            autoFocus
                         />
                     }
                     <List component="nav">
-                        {results.map(({displayValue, timestamp}, index) => (
-                            <ListItem key={`${index}-${timestamp}`}>
+                        {results.map(({displayValue, id}) => (
+                            <ListItem key={id}>
                                 <ListItemText primary={displayValue}/>
                             </ListItem>
                         ))}

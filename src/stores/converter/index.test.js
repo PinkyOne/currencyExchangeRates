@@ -5,7 +5,7 @@ import {ConverterStore} from './index';
 import {getSnapshot} from 'mobx-state-tree';
 
 
-test('Converter - Create', () => {
+test('Converter - Create Store', () => {
     const store = ConverterStore.create({});
     const snapshot = getSnapshot(store);
 
