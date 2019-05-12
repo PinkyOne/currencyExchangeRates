@@ -2,12 +2,13 @@
 
 import React from 'react';
 
-import DialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
-import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from './components/DialogTitle';
+import DialogContent from './components/DialogContent';
+import DialogActions from './components/DialogActions';
+
 
 export type ErrorDialogProps = {
     open: boolean,
@@ -23,9 +24,7 @@ const ErrorDialog = ({open, title, content, actionLabel, onClose, action}: Error
         onClose={onClose}
         open={open}
     >
-        <DialogTitle>
-            {title}
-        </DialogTitle>
+        <DialogTitle onClose={onClose} title={title}/>
         <DialogContent>
             <Typography gutterBottom>
                 {content}

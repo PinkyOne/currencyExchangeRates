@@ -32,74 +32,109 @@ type Props = {
     currenciesStore: CurrenciesStore | any
 };
 
+
+const baseError = {
+    open: true,
+    actionLabel: REFRESH_LABEL
+};
+
+const errorDialogClosed = {open: false};
+
 @inject('currenciesStore')
 @inject('exchangeRatesStore')
 @observer
 class Layout extends Component<Props> {
     @computed
-    get error(): ErrorDialogProps {
+    get error(): boolean | ErrorDialogProps {
         const {
-            currenciesStore: {
-                fetchCurrenciesError,
-                resetFetchCurrenciesError,
-                fetch: fetchCurrencies,
+            ratesIsOutdatedError,
+            fetchExchangeRatesError,
+            fetchCurrenciesError,
+            fetchBasicCurrencyError
+        } = this;
 
-                fetchBasicCurrencyError,
-                resetFetchBasicCurrencyError,
-                fetchBasicCurrency
-            },
+        return ratesIsOutdatedError
+            || fetchExchangeRatesError
+            || fetchCurrenciesError
+            || fetchBasicCurrencyError
+            || errorDialogClosed;
+    }
+
+    @computed
+    get ratesIsOutdatedError(): boolean | ErrorDialogProps {
+        const {
             exchangeRatesStore: {
                 ratesIsOutdated,
                 resetRefreshTimer,
+                fetch: fetchExchangeRates
+            }
+        } = this.props;
+        if (!ratesIsOutdated) return false;
+        return {
+            ...baseError,
+            action: fetchExchangeRates,
+            onClose: resetRefreshTimer,
+            title: EXCHANGE_RATES_ERROR_TITLE,
+            content: EXCHANGE_RATES_OUTDATED_DESCRIPTION
+        }
+    }
+
+    @computed
+    get fetchExchangeRatesError(): boolean | ErrorDialogProps {
+        const {
+            exchangeRatesStore: {
                 fetchError: fetchExchangeRatesError,
                 resetFetchError: resetFetchExchangeRatesError,
                 fetch: fetchExchangeRates
             }
         } = this.props;
+        if (!fetchExchangeRatesError) return false;
 
-        const baseError = {
-            open: true,
-            actionLabel: REFRESH_LABEL
-        };
+        return {
+            ...baseError,
+            action: fetchExchangeRates,
+            onClose: resetFetchExchangeRatesError,
+            title: EXCHANGE_RATES_ERROR_TITLE,
+            content: EXCHANGE_RATES_ERROR_DESCRIPTION
+        }
+    }
 
-        if(ratesIsOutdated){
-            return {
-                ...baseError,
-                action: fetchExchangeRates,
-                onClose: resetRefreshTimer,
-                title: EXCHANGE_RATES_ERROR_TITLE,
-                content: EXCHANGE_RATES_OUTDATED_DESCRIPTION
-            }
+    @computed
+    get fetchCurrenciesError(): boolean | ErrorDialogProps {
+        const {
+            currenciesStore: {
+                fetchCurrenciesError,
+                resetFetchCurrenciesError,
+                fetch: fetchCurrencies,
+            },
+        } = this.props;
+        if (!fetchCurrenciesError) return false;
+        return {
+            ...baseError,
+            action: fetchCurrencies,
+            onClose: resetFetchCurrenciesError,
+            title: CURRENCIES_LIST_ERROR_TITLE,
+            content: CURRENCIES_LIST_ERROR_DESCRIPTION
         }
+    }
 
-        if (fetchExchangeRatesError) {
-            return {
-                ...baseError,
-                action: fetchExchangeRates,
-                onClose: resetFetchExchangeRatesError,
-                title: EXCHANGE_RATES_ERROR_TITLE,
-                content: EXCHANGE_RATES_ERROR_DESCRIPTION
-            }
+    @computed
+    get fetchBasicCurrencyError(): boolean | ErrorDialogProps {
+        const {
+            currenciesStore: {
+                fetchBasicCurrencyError,
+                resetFetchBasicCurrencyError,
+                fetchBasicCurrency
+            },
+        } = this.props;
+        if (!fetchBasicCurrencyError) return false;
+        return {
+            ...baseError,
+            action: fetchBasicCurrency,
+            onClose: resetFetchBasicCurrencyError,
+            title: CURRENCIES_LIST_ERROR_TITLE,
+            content: BASIC_CURRENCY_DETECTION_ERROR_DESCRIPTION
         }
-        if (fetchCurrenciesError) {
-            return {
-                ...baseError,
-                action: fetchCurrencies,
-                onClose: resetFetchCurrenciesError,
-                title: CURRENCIES_LIST_ERROR_TITLE,
-                content: CURRENCIES_LIST_ERROR_DESCRIPTION
-            }
-        }
-        if (fetchBasicCurrencyError) {
-            return {
-                ...baseError,
-                action: fetchBasicCurrency,
-                onClose: resetFetchBasicCurrencyError,
-                title: CURRENCIES_LIST_ERROR_TITLE,
-                content: BASIC_CURRENCY_DETECTION_ERROR_DESCRIPTION
-            }
-        }
-        return {open: false};
     }
 
     render() {
@@ -119,7 +154,7 @@ class Layout extends Component<Props> {
                         {children}
                     </Content>
                 </NoSsr>
-                <ErrorDialog {...error} />
+                <ErrorDialog open={!!error} {...error} />
             </CustomPaper>
         );
     }

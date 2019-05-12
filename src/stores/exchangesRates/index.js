@@ -69,6 +69,7 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
             self.ratesIsOutdated = value;
         },
         resetRefreshTimer() {
+            self.setRatesIsOutdated(false);
             clearTimeout(self.refreshTimerId);
         }
     }))
