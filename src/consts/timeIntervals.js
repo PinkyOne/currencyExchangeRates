@@ -1,1 +1,1 @@
-export const ONE_HOUR = 1000 * 1;
+export const ONE_HOUR = 1000 * 60 * 60;
