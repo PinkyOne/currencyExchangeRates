@@ -3,7 +3,7 @@ import {getCurrencies, getCurrentCurrencyCode, getExchangeRates} from 'api';
 
 jest.mock('axios');
 
-test('get latest', async () => {
+test('get Exchange Rates', async () => {
     const mockedResponse = {
         data: {
             timestamp: 1557054007,
