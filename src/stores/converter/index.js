@@ -1,4 +1,4 @@
-import {applySnapshot, getRoot, types} from 'mobx-state-tree';
+import {applySnapshot, getEnv, getRoot, types} from 'mobx-state-tree';
 import moment from 'moment';
 import {parseStringToConvert} from 'utils';
 
@@ -10,12 +10,13 @@ const ConvertResult = types.model('ConvertResult', {
         return parseStringToConvert(self.conversionString);
     },
     get result() {
-        const {exchangeRatesStore} = getRoot(self);
+        const localGetRoot = getEnv(self).getRoot || getRoot;
+        const {exchangeRatesStore} = localGetRoot(self);
         const {convertObject, error: parseError} = self;
 
         let {result: conversionResult, error: conversionError} = parseError
             ? {}
-            :exchangeRatesStore.convertCurrencies(convertObject);
+            : exchangeRatesStore.convertCurrencies(convertObject);
         if (parseError || conversionError) return {parseError, conversionError};
 
         if (conversionResult === 'NaN') {
