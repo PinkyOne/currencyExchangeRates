@@ -7,9 +7,8 @@ import {inject, observer} from 'mobx-react';
 import NoSsr from '@material-ui/core/NoSsr';
 import Typography from '@material-ui/core/Typography';
 
-import AppBar from './components/AppBar';
-import type {ErrorDialogProps} from './components/ErrorDialog';
-import ErrorDialog from './components/ErrorDialog';
+import AppBar from 'components/AppBar';
+import ErrorDialog from 'components/ErrorDialog';
 
 import {REFRESH_LABEL, WELCOME_LABEL} from 'consts/labels';
 import {
@@ -25,6 +24,7 @@ import {Content, CustomPaper} from './styles';
 
 import type {ExchangeRatesStore} from 'stores/exchangesRates/types';
 import type {CurrenciesStore} from 'stores/currencies/types';
+import type {ErrorDialogProps} from 'components/ErrorDialog';
 
 type Props = {
     children: React$Node,

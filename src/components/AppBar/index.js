@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import BasicCurrencySelector from './components/BasicCurrencySelector';
+import BasicCurrencySelector from 'components/BasicCurrencySelector';
 
 import {CONVERTER, CURRENCIES_LIST} from 'routes';
 import {CONVERTER_LABEL, CURRENCIES_LIST_LABEL} from 'consts/labels';

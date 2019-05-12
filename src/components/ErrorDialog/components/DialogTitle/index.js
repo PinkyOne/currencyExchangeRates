@@ -1,8 +1,8 @@
 import React from 'react';
-import {withStyles} from '@material-ui/core/styles/index';
-import MuiDialogTitle from '@material-ui/core/DialogTitle/index';
-import Typography from '@material-ui/core/Typography/index';
-import IconButton from '@material-ui/core/IconButton/index';
+import {withStyles} from '@material-ui/core/styles';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 const DialogTitle = withStyles(theme => ({
