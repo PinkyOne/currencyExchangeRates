@@ -154,7 +154,7 @@ class Layout extends Component<Props> {
                         {children}
                     </Content>
                 </NoSsr>
-                <ErrorDialog open={!!error} {...error} />
+                <ErrorDialog open={Boolean(error)} {...error} />
             </CustomPaper>
         );
     }
