@@ -32,21 +32,18 @@ class BasicCurrencySelector extends Component<Props> {
     render() {
         const {basicCurrency, currencies, isFetching} = this.props.currenciesStore;
         return (
-            <React.Fragment>
-                {isFetching
-                    ? <CircularProgress/>
-                    : <Select
-                        value={basicCurrency.code}
-                        onChange={this.onChange}
-                    >
-                        {currencies.map(({code, name}) => (
-                            <MenuItem key={code} value={code}>
-                                {name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                }
-            </React.Fragment>
+            isFetching
+                ? <CircularProgress/>
+                : <Select
+                    value={basicCurrency.code}
+                    onChange={this.onChange}
+                >
+                    {currencies.map(({code, name}) => (
+                        <MenuItem key={code} value={code}>
+                            {name}
+                        </MenuItem>
+                    ))}
+                </Select>
         );
     };
 }

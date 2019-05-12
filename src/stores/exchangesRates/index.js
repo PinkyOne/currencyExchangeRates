@@ -2,6 +2,8 @@ import {applySnapshot, flow, types} from 'mobx-state-tree';
 import numeral from 'numeral';
 import {getExchangeRates} from 'api';
 
+import {ONE_HOUR} from 'consts/timeIntervals';
+
 const ExchangeRate = types.model('ExchangeRate', {
         code: types.string,
         rate: types.number,
@@ -35,7 +37,6 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
                     code, rate
                 }));
 
-                const ONE_HOUR = 1000 * 60 * 60;
                 const refreshTimerId = setTimeout(() => self.setRatesIsOutdated(true), ONE_HOUR);
 
                 applySnapshot(self, {baseCurrencyCode, exchangeRates, refreshTimerId});

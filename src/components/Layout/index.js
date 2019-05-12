@@ -69,8 +69,8 @@ class Layout extends Component<Props> {
                 fetch: fetchExchangeRates
             }
         } = this.props;
-        if (!ratesIsOutdated) return false;
-        return {
+
+        return ratesIsOutdated && {
             ...baseError,
             action: fetchExchangeRates,
             onClose: resetRefreshTimer,
@@ -88,9 +88,8 @@ class Layout extends Component<Props> {
                 fetch: fetchExchangeRates
             }
         } = this.props;
-        if (!fetchExchangeRatesError) return false;
 
-        return {
+        return fetchExchangeRatesError && {
             ...baseError,
             action: fetchExchangeRates,
             onClose: resetFetchExchangeRatesError,
@@ -108,8 +107,8 @@ class Layout extends Component<Props> {
                 fetch: fetchCurrencies,
             },
         } = this.props;
-        if (!fetchCurrenciesError) return false;
-        return {
+
+        return fetchCurrenciesError && {
             ...baseError,
             action: fetchCurrencies,
             onClose: resetFetchCurrenciesError,
@@ -127,8 +126,8 @@ class Layout extends Component<Props> {
                 fetchBasicCurrency
             },
         } = this.props;
-        if (!fetchBasicCurrencyError) return false;
-        return {
+
+        return fetchBasicCurrencyError && {
             ...baseError,
             action: fetchBasicCurrency,
             onClose: resetFetchBasicCurrencyError,
