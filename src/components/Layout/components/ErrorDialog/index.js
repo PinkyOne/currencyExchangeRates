@@ -11,11 +11,11 @@ import Dialog from '@material-ui/core/Dialog';
 
 export type ErrorDialogProps = {
     open: boolean,
-    title: string,
-    content: string,
-    actionLabel: string,
-    onClose: () => void,
-    action: () => void,
+    title?: string,
+    content?: string,
+    actionLabel?: string,
+    onClose?: () => void,
+    action?: () => void | Promise<void>,
 };
 
 const ErrorDialog = ({open, title, content, actionLabel, onClose, action}: ErrorDialogProps) => (

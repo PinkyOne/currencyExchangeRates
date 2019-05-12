@@ -1,7 +1,6 @@
 import {applySnapshot, flow, types} from 'mobx-state-tree';
 import numeral from 'numeral';
 import {getExchangeRates} from 'api';
-import * as moment from 'moment';
 
 const ExchangeRate = types.model('ExchangeRate', {
         code: types.string,
@@ -18,8 +17,9 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
         isFetching: types.optional(types.boolean, false),
         baseCurrencyCode: types.maybe(types.string),
         exchangeRates: types.array(ExchangeRate),
-        timestamp: types.maybe(types.number),
-        fetchError: types.optional(types.boolean, false)
+        refreshTimerId: types.maybe(types.number),
+        fetchError: types.optional(types.boolean, false),
+        ratesIsOutdated: types.optional(types.boolean, false),
     })
     .actions(self => ({
         afterCreate() {
@@ -28,11 +28,18 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
         fetch: flow(function* () {
             self.isFetching = true;
             try {
-                const {rates, base: baseCurrencyCode, timestamp} = yield getExchangeRates();
+                const {rates, base: baseCurrencyCode} = yield getExchangeRates();
+                self.resetRefreshTimer();
+
                 const exchangeRates = Object.entries(rates).map(([code, rate]) => ({
                     code, rate
                 }));
-                applySnapshot(self, {baseCurrencyCode, exchangeRates, timestamp});
+
+                const ONE_HOUR = 1000 * 6;
+                // const ONE_HOUR = 1000 * 60 * 60;
+                const refreshTimerId = setTimeout(() => self.setRatesIsOutdated(true), ONE_HOUR);
+
+                applySnapshot(self, {baseCurrencyCode, exchangeRates, refreshTimerId});
             } catch (error) {
                 self.fetchError = !!error;
             } finally {
@@ -55,8 +62,14 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
             ];
             applySnapshot(self, {...self, baseCurrencyCode: newBaseCode, exchangeRates: newExchangeRates})
         },
-        resetFetchError(){
+        resetFetchError() {
             self.fetchError = false;
+        },
+        setRatesIsOutdated(value) {
+            self.ratesIsOutdated = value;
+        },
+        resetRefreshTimer() {
+            clearTimeout(self.refreshTimerId);
         }
     }))
     .views(self => ({
@@ -91,9 +104,6 @@ export const ExchangeRatesStore = types.model('ExchangeRatesStore', {
                     const conversionResult = convertCurrencies({value: 1, from: baseCode, to: code}, false);
                     return (`${code} - ${conversionResult.result}`)
                 });
-        },
-        get isExchangeRatesOutdated() {
-            return  moment.unix() - self.timestamp > 60 * 60 * 60;
         }
     }));
 

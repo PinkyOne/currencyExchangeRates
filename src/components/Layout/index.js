@@ -17,7 +17,8 @@ import {
     CURRENCIES_LIST_ERROR_DESCRIPTION,
     CURRENCIES_LIST_ERROR_TITLE,
     EXCHANGE_RATES_ERROR_DESCRIPTION,
-    EXCHANGE_RATES_ERROR_TITLE
+    EXCHANGE_RATES_ERROR_TITLE,
+    EXCHANGE_RATES_OUTDATED_DESCRIPTION
 } from 'consts/errors';
 
 import {Content, CustomPaper} from './styles';
@@ -48,6 +49,8 @@ class Layout extends Component<Props> {
                 fetchBasicCurrency
             },
             exchangeRatesStore: {
+                ratesIsOutdated,
+                resetRefreshTimer,
                 fetchError: fetchExchangeRatesError,
                 resetFetchError: resetFetchExchangeRatesError,
                 fetch: fetchExchangeRates
@@ -58,6 +61,16 @@ class Layout extends Component<Props> {
             open: true,
             actionLabel: REFRESH_LABEL
         };
+
+        if(ratesIsOutdated){
+            return {
+                ...baseError,
+                action: fetchExchangeRates,
+                onClose: resetRefreshTimer,
+                title: EXCHANGE_RATES_ERROR_TITLE,
+                content: EXCHANGE_RATES_OUTDATED_DESCRIPTION
+            }
+        }
 
         if (fetchExchangeRatesError) {
             return {
