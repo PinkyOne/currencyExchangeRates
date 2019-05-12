@@ -55,8 +55,7 @@ class AppBar extends Component<Router> {
             anchorEl,
             openMenu,
             title,
-            closeMenu,
-            isOnCurrenciesList
+            closeMenu
         } = this;
 
         return (<React.Fragment>
@@ -89,14 +88,12 @@ class AppBar extends Component<Router> {
                 <LinkMenuItem
                     onClick={closeMenu}
                     to={CONVERTER}
-                    selected={!isOnCurrenciesList}
                 >
                     {CONVERTER_LABEL}
                 </LinkMenuItem>
                 <LinkMenuItem
                     onClick={closeMenu}
                     to={CURRENCIES_LIST}
-                    selected={isOnCurrenciesList}
                 >
                     {CURRENCIES_LIST_LABEL}
                 </LinkMenuItem>
