@@ -4,6 +4,17 @@ There is Implementation of [Appbooster test task](https://github.com/appbooster/
 
 SPA contains 2 pages - Converter and Currencies List
 
+####TODO:
+
+* Add outdated exchange rates indicator to AppBar
+* Implement Currencies List with virtualized list
+* Improve design of exchange rates query history
+* Improve code splitting
+* Add pre-caching with [Workbox](https://developers.google.com/web/tools/workbox/)
+* Add pre-render routes with [react-snap](https://github.com/stereobooster/react-snap)
+* Perform accessibility auditing with [react-axe](https://github.com/dequelabs/react-axe) and [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y)
+* Improve web app manifest
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
