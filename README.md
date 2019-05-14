@@ -9,11 +9,14 @@ SPA contains 2 pages - Converter and Currencies List
 * Add outdated exchange rates indicator to AppBar
 * Implement Currencies List with virtualized list
 * Improve design of exchange rates query history
+* Add caching of currencies/baseCurrency/exchangeRates via IndexedDB
+* Add auto-refreshing of exchangeRates via Service Worker
 * Improve code splitting
 * Add pre-caching with [Workbox](https://developers.google.com/web/tools/workbox/)
 * Add pre-render routes with [react-snap](https://github.com/stereobooster/react-snap)
 * Perform accessibility auditing with [react-axe](https://github.com/dequelabs/react-axe) and [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y)
 * Improve web app manifest
+* ?Add push-notification via firebase?
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
