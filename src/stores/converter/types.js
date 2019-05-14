@@ -2,6 +2,7 @@
 import type {ConvertObject} from 'utils/types';
 
 export type ConvertResult = {
+    id: string,
     conversionString: string,
     timestamp: number,
     convertObject: ConvertObject,
